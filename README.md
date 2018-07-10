@@ -16,7 +16,7 @@ The options are relatively obvious:
 
 ```
 usage: book-maker.py [-h] --command CMD --output PATH --visit-threshold INT
-                     [--dump-interval SECONDS] [--dump-tree]
+                     [--dump-interval SECONDS] [--print-tree]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -28,8 +28,8 @@ optional arguments:
                         least this many visits.
   --dump-interval SECONDS
                         Dump a .bin every this many seconds.
-  --dump-tree           Dump the book tree upon each probing.
-
+  --print-tree          Print the book tree upon each probing. (May print lots
+                        of text.)
 ```
 
 An example usage:

@@ -107,7 +107,7 @@ if __name__ == "__main__":
 	parser.add_argument("--output", metavar="PATH", required=True, help="Output path to dump a .bin to.")
 	parser.add_argument("--visit-threshold", metavar="INT", type=int, required=True, help="Only write moves into the book if their parent has at least this many visits.")
 	parser.add_argument("--dump-interval", metavar="SECONDS", type=int, default=60, help="Dump a .bin every this many seconds.")
-	parser.add_argument("--dump-tree", action="store_true", help="Dump the book tree upon each probing.")
+	parser.add_argument("--print-tree", action="store_true", help="Print the book tree upon each probing. (May print lots of text.)")
 	args = parser.parse_args()
 	print "Options:", args
 
