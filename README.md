@@ -43,3 +43,8 @@ By default lc0 tends towards exploring extremely deeply, and not very broadly, s
 
 TODO: Evaluate how much increasing the Cpuct changes the moves selected at extremely high visit counts.
 
+## License
+
+Because this code uses `python-chess`, it is required to be released under the terms of the GPL3.
+However, I [*additionally*](https://opensource.stackexchange.com/questions/4137/can-public-domain-use-gpl-licensed-library-program) release the code into the public domain, and under CC0 (for users outside of the US) as well.
+
