@@ -38,7 +38,7 @@ def write_polyglot_bin(f, entries):
 
 class LeelaInterface:
 	def __init__(self, command):
-		self.proc = subprocess.Popen(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=open("/dev/null"))
+		self.proc = subprocess.Popen(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 
 	def send(self, s):
 		self.proc.stdin.write(s)

@@ -35,7 +35,7 @@ optional arguments:
 An example usage:
 
 ```
-$ ./book-maker.py --command "/path/to/leela-chess/lc0/build/lc0 -w /tmp/some-network-file --cpuct=10.0" --output opening-book.bin --dump-interval=60 --visit-threshold=100000
+$ ./book-maker.py --command "/path/to/leela-chess/lc0/build/lc0 -w /tmp/some-network-file --cpuct=100.0" --output opening-book.bin --dump-interval=60 --visit-threshold=100000
 ```
 
 This will launch lc0 with the given weights file and Cpuct value, and every minute write a book to opening-book.bin containing the most visited move of every position with at least 100k visits.
