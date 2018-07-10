@@ -89,7 +89,7 @@ def explore_tree(args, leela, entries, board, moves, visit_threshold):
 	indent = "  " * len(moves)
 	children = leela.probe(moves)
 	best_move = max(children, key=children.__getitem__)
-	if args.dump_tree:
+	if args.print_tree:
 		print indent + "%s -> %s" % (board.fen(), best_move)
 	entries.append(make_entry(board, best_move))
 	for move, visits in children.iteritems():
