@@ -98,7 +98,7 @@ def explore_tree(args, leela, entries, board, moves, visit_threshold):
     best_move = max(children, key=children.__getitem__)
     if args.print_tree:
         print(indent + "%s -> %s" % (board.fen(), best_move))
-    entries.append(make_entry(board, best_move))
+    entries.append(make_entry(board, best_move, weight=min(0xffff, children[best_move] // 256)))
     for (move, visits) in children.items():
         if visits < visit_threshold:
             continue
@@ -110,7 +110,6 @@ def explore_tree(args, leela, entries, board, moves, visit_threshold):
 
 if __name__ == "__main__":
     import argparse
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--command", metavar="CMD", required=True,
                         help="Command to run lc0. (Split via shlex.split, and executed.)")
@@ -121,6 +120,8 @@ if __name__ == "__main__":
                         help="Dump a .bin every this many seconds.")
     parser.add_argument("--print-tree", action="store_true",
                         help="Print the book tree upon each probing. (May print lots of text.)")
+    parser.add_argument("--multiwrite", action="store_true",
+                        help="write multiple book files with visit thresholds increasing from 256 by factors of two")
     args = parser.parse_args()
     print("Options:", args)
 
@@ -134,13 +135,30 @@ if __name__ == "__main__":
         leela.launch()
         time.sleep(args.dump_interval)
         leela.stop()
+        if (args.multiwrite):
+            donewriting = False
+            threshold = 256
+            while not donewriting:
+                print("Probing tree.")
+                entries = []
+                explore_tree(args, leela, entries, chess.Board(), [], threshold)
+                if (len(entries) > 2):
 
-        print("Probing tree.")
-        entries = []
-        explore_tree(args, leela, entries, chess.Board(), [], args.visit_threshold)
+                    print("Writing book with threshold ", threshold, end=' ')
+                    sys.stdout.flush()
+                    with open(args.output + "-" + str(threshold) + "n.bin", "wb") as f:
+                        write_polyglot_bin(f, entries)
+                    print("wrote %i entries." % len(entries))
+                    threshold *= 2
+                else:
+                    donewriting = True
+        else:
+            print("Probing tree.")
+            entries = []
+            explore_tree(args, leela, entries, chess.Board(), [], args.visit_threshold)
 
-        print("Writing book...", end=' ')
-        sys.stdout.flush()
-        with open(args.output, "wb") as f:
-            write_polyglot_bin(f, entries)
-        print("wrote %i entries." % len(entries))
+            print("Writing book...", end=' ')
+            sys.stdout.flush()
+            with open(args.output, "wb") as f:
+                write_polyglot_bin(f, entries)
+            print("wrote %i entries." % len(entries))
