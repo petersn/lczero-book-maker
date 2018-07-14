@@ -71,7 +71,7 @@ if __name__ == "__main__":
     parser.add_argument("--depth", type=int, default=1000)
     parser.add_argument("--fens", default="\"" + str(chess.STARTING_FEN) + "\"", dest="boards",
                         help="list of FENs representing the root positions of the books (doesn't need to be ordered).")
-    args = parser.parse_args(["mergebooks", "bluh.bin", "--print-tree"])
+    args = parser.parse_args()
     fens = shlex.split(args.boards)
     bookpaths = [args.inputdir + "/" + f for f in listdir(args.inputdir) if isfile(join(args.inputdir, f))]
     books = [chess.polyglot.open_reader(f) for f in bookpaths]
