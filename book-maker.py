@@ -98,7 +98,7 @@ def explore_tree(args, leela, entries, board, moves, visit_threshold):
     best_move = max(children, key=children.__getitem__)
     if args.print_tree:
         print(indent + "%s -> %s" % (board.fen(), best_move))
-    entries.append(make_entry(board, best_move))
+        entries.append(make_entry(board, best_move, weight=min(0xffff, children[best_move] // 256)))
     for (move, visits) in children.items():
         if visits < visit_threshold:
             continue
